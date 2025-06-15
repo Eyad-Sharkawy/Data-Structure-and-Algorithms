@@ -73,7 +73,7 @@ list.clear();
 #### Performance Characteristics
 - Insertion/Deletion at ends: O(1)
 - Insertion/Deletion at arbitrary position: O(n)
-- Random access: O(n)
+- Random access: O(n/2) average case, O(1) for first/last element
 - Space complexity: O(n)
 - Iterator operations: O(1)
 

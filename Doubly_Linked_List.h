@@ -1,74 +1,136 @@
-//
-// Created by eyadd on 2025-05-02.
-// Corrected and reviewed version.
-//
+/**
+ * @file Doubly_Linked_List.h
+ * @brief A template class implementing a doubly linked list data structure
+ * @author Eyad Sharkawy
+ * @date 2025-05-02
+ */
 
 #ifndef DOUBLY_LINKED_LIST_H
 #define DOUBLY_LINKED_LIST_H
 
 #include <stdexcept> // For std::out_of_range
 #include <iostream>  // For the print() method
+#include <initializer_list>
 
-template <class t>
+/**
+ * @brief A template class implementing a doubly linked list
+ * @tparam T The type of elements stored in the list
+ * 
+ * This class provides a doubly linked list implementation with the following features:
+ * - Bidirectional iteration
+ * - Constant time insertion/deletion at both ends
+ * - O(n) time insertion/deletion at arbitrary positions
+ * - Memory efficient (no pre-allocation)
+ * - Exception safe
+ */
+template <class T>
 class Doubly_Linked_List {
+
 private:
+    /**
+     * @brief Node structure for the doubly linked list
+     */
     struct node {
-        node* next;
-        node* prev;
-        t item;
+        node* next;  ///< Pointer to the next node
+        node* prev;  ///< Pointer to the previous node
+        T item;      ///< The data stored in the node
     };
-    node* front;
-    node* back;
-    unsigned long long length;
+
+    node* front;     ///< Pointer to the first node
+    node* back;      ///< Pointer to the last node
+    unsigned long long length;  ///< Number of elements in the list
 
 public:
-    // Default constructor
+    /**
+     * @brief Default constructor
+     * Creates an empty list
+     */
     Doubly_Linked_List(): front(nullptr), back(nullptr), length(0) {}
 
-    // Copy constructor
+    /**
+     * @brief Initializer list constructor
+     * @param array The initializer list containing elements to be added
+     * Creates a list with elements from the initializer list
+     */
+    Doubly_Linked_List(std::initializer_list<T> array) : front(nullptr), back(nullptr), length(0) {
+        for (const T& item : array) {
+            push_back(item);
+        }
+    }
+
+    /**
+     * @brief Initializer list assignment operator
+     * @param array The initializer list containing elements to be assigned
+     * @return Reference to the modified list
+     */
+    Doubly_Linked_List& operator = (std::initializer_list<T> array) {
+        this->clear();
+        for (const T& item : array) {
+            push_back(item);
+        }
+        return *this;
+    }
+
+    /**
+     * @brief Copy constructor
+     * @param other The list to be copied
+     * Creates a deep copy of the other list
+     */
     Doubly_Linked_List(const Doubly_Linked_List& other) : front(nullptr), back(nullptr), length(0) {
-        // Creates a deep copy of the other list
         node* temp = other.front;
         while (temp != nullptr) {
-            this -> push_back(temp -> item);
+            this->push_back(temp->item);
             temp = temp->next;
         }
     }
 
-    // Copy assignment operator
+    /**
+     * @brief Copy assignment operator
+     * @param other The list to be copied
+     * @return Reference to the modified list
+     */
     Doubly_Linked_List& operator = (const Doubly_Linked_List& other) {
-        // Check for self-assignment
         if (this == &other) {
             return *this;
         }
-
-        // Clear the current list to prevent memory leaks
         this->clear();
-
-        // Copy elements from the other list
         node* temp = other.front;
         while (temp != nullptr) {
-            this -> push_back (temp -> item);
-            temp = temp -> next;
+            this->push_back(temp->item);
+            temp = temp->next;
         }
-
         return *this;
     }
 
-    // Destructor
+    /**
+     * @brief Destructor
+     * Frees all allocated memory
+     */
     ~Doubly_Linked_List() {
         clear();
     }
 
+    /**
+     * @brief Get the number of elements in the list
+     * @return The length of the list
+     */
     [[nodiscard]] unsigned long long get_length() const {
         return length;
     }
 
+    /**
+     * @brief Check if the list is empty
+     * @return true if the list is empty, false otherwise
+     */
     [[nodiscard]] bool empty() const {
         return length == 0;
     }
 
-    void push_back(t new_item) {
+    /**
+     * @brief Add an element to the end of the list
+     * @param new_item The element to be added
+     */
+    void push_back(T new_item) {
         node* new_node = new node{nullptr, nullptr, new_item};
         if (empty()) {
             front = new_node;
@@ -82,7 +144,11 @@ public:
         ++length;
     }
 
-    void push_front (t new_item) {
+    /**
+     * @brief Add an element to the beginning of the list
+     * @param new_item The element to be added
+     */
+    void push_front(T new_item) {
         node* new_node = new node{nullptr, nullptr, new_item};
         if (empty()) {
             front = new_node;
@@ -96,7 +162,13 @@ public:
         ++length;
     }
 
-    void insert(const unsigned long long index, t new_item) {
+    /**
+     * @brief Insert an element at a specific position
+     * @param index The position where the element should be inserted
+     * @param new_item The element to be inserted
+     * @throw std::out_of_range if index is out of range
+     */
+    void insert(const unsigned long long index, T new_item) {
         if (index > length) {
             throw std::out_of_range("Index out of range in insert()");
         }
@@ -109,17 +181,16 @@ public:
         }
         else {
             node* temp;
-            // Optimization: traverse from the end that is closer to the index
             if (index <= length / 2) {
                 temp = front;
                 for (unsigned long long i = 0; i < index; ++i) {
-                    temp = temp -> next;
+                    temp = temp->next;
                 }
             }
             else {
                 temp = back;
                 for (unsigned long long i = length - 1; i > index; --i) {
-                    temp = temp -> prev;
+                    temp = temp->prev;
                 }
             }
 
@@ -134,10 +205,13 @@ public:
         }
     }
 
+    /**
+     * @brief Remove the last element from the list
+     */
     void pop_back() {
         if (empty()) return;
         node* temp = back;
-        if (front == back) {  // only one element
+        if (front == back) {
             front = back = nullptr;
         } else {
             back = back->prev;
@@ -147,10 +221,13 @@ public:
         --length;
     }
 
+    /**
+     * @brief Remove the first element from the list
+     */
     void pop_front() {
         if (empty()) return;
         node* temp = front;
-        if (front == back) {  // only one element
+        if (front == back) {
             front = back = nullptr;
         } else {
             front = front->next;
@@ -160,8 +237,12 @@ public:
         --length;
     }
 
-
-    void erase (unsigned long long index) {
+    /**
+     * @brief Remove an element at a specific position
+     * @param index The position of the element to be removed
+     * @throw std::out_of_range if index is out of range
+     */
+    void erase(unsigned long long index) {
         if (index >= length) {
             throw std::out_of_range("Index out of range in erase()");
         }
@@ -176,17 +257,16 @@ public:
         }
 
         node* temp;
-        // Optimization: traverse from the end that is closer to the index
         if (index <= (length / 2)) {
             temp = front;
             for (unsigned long long i = 0; i < index; ++i) {
-                temp = temp -> next;
+                temp = temp->next;
             }
         }
         else {
             temp = back;
             for (unsigned long long i = (length - 1); i > index; --i) {
-                temp = temp -> prev;
+                temp = temp->prev;
             }
         }
         temp->next->prev = temp->prev;
@@ -195,6 +275,9 @@ public:
         --length;
     }
 
+    /**
+     * @brief Remove all elements from the list
+     */
     void clear() {
         node* current = front;
         while (current != nullptr) {
@@ -206,122 +289,172 @@ public:
         length = 0;
     }
 
-    // FIX: The original implementation did not correctly swap the pointers.
+    /**
+     * @brief Reverse the order of elements in the list
+     */
     void reverse() {
         if (empty() || length == 1) {
             return;
         }
 
         node* current = front;
-        node* temp_ptr = nullptr;
+        node* temp = nullptr;
 
-        // Iterate through the list and swap the next and prev pointers for each node
+        // Swap next and prev pointers for all nodes
         while (current != nullptr) {
-            temp_ptr = current->prev;       // Store the original previous pointer
-            current->prev = current->next;  // The new prev is the original next
-            current->next = temp_ptr;       // The new next is the original prev
-            current = current->prev;        // Move to the next node (which is the original next)
+            temp = current->prev;
+            current->prev = current->next;
+            current->next = temp;
+            current = current->prev;  // Move to next node (which is now in prev)
         }
 
-        // After swapping all pointers, swap the main front and back pointers of the list.
-        // The original front's prev pointer (which is now in `temp_ptr`) is the new head.
-        if (temp_ptr != nullptr) {
-             front = temp_ptr->prev;
-        }
-
-        // A simpler way to swap front and back after the pointer surgery:
-        temp_ptr = front;
+        // Swap front and back pointers
+        temp = front;
         front = back;
-        back = temp_ptr;
+        back = temp;
     }
 
+    /**
+     * @brief Print the list contents to standard output
+     */
     void print() const {
         node* temp = front;
         std::cout << "[ ";
         while (temp != nullptr) {
-            std::cout << temp -> item << ' ';
-            temp = temp -> next;
+            std::cout << temp->item << ' ';
+            temp = temp->next;
         }
         std::cout << ']' << std::endl;
     }
 
-    class iterator {
+    /**
+     * @brief Iterator class for the doubly linked list
+     */
+    class Iterator {
     private:
-        node* curr;
-        // Private constructor so only the list class can create iterators
-        iterator(node* p) : curr(p) {}
+        node* curr;  ///< Current node pointer
+        Doubly_Linked_List<T>* list;  ///< Reference to parent list
+
+        explicit Iterator(node* p, Doubly_Linked_List<T>* l = nullptr) : curr(p), list(l) {}
 
     public:
-        // Make the list class a friend to allow access to the private constructor
-        friend class Doubly_Linked_List<t>;
+        friend class Doubly_Linked_List<T>;
 
-        iterator(): curr(nullptr) {}
-        iterator(const iterator& other): curr(other.curr) {}
+        Iterator(): curr(nullptr), list(nullptr) {}
+        Iterator(const Iterator& other): curr(other.curr), list(other.list) {}
 
-        iterator& operator = (const iterator& other) {
+        Iterator& operator = (const Iterator& other) {
             if (this != &other) {
                 curr = other.curr;
+                list = other.list;
             }
             return *this;
         }
 
-        bool operator == (const iterator& other) const {
+        bool operator == (const Iterator& other) const {
             return curr == other.curr;
         }
 
-        bool operator != (const iterator& other) const {
+        bool operator != (const Iterator& other) const {
             return curr != other.curr;
         }
 
-        t& operator* () {
+        T& operator* () {
             if (curr) {
                 return curr->item;
             }
             throw std::runtime_error("Dereferencing a null iterator.");
         }
 
-        // Pre-increment
-        iterator& operator ++ () {
+        Iterator& operator ++ () {
             if (curr) {
                 curr = curr->next;
             }
             return *this;
         }
 
-        // Post-increment
-        iterator operator ++ (int) {
-            iterator temp = *this;
+        Iterator operator ++ (int) {
+            Iterator temp = *this;
             ++(*this);
             return temp;
         }
 
-        // Pre-decrement
-        iterator& operator -- () {
-            if (curr) {
+        Iterator& operator -- () {
+            if (!curr) {
+                if (list && !list->empty()) {
+                    curr = list->back;
+                }
+            } else {
                 curr = curr->prev;
             }
             return *this;
         }
 
-        // Post-decrement
-        iterator operator -- (int) {
-            iterator temp = *this;
+        Iterator operator -- (int) {
+            Iterator temp = *this;
             --(*this);
             return temp;
         }
+
+        T* operator -> () {
+            if (!curr) {
+                throw std::runtime_error("Cannot access member via end() iterator");
+            }
+            return &(curr->item);
+        }
     };
 
-    iterator begin() {
-        return iterator(front);
+    /**
+     * @brief Get an iterator to the first element
+     * @return Iterator pointing to the first element
+     */
+    Iterator begin() {
+        return Iterator(front, this);
     }
 
-    iterator end() {
-        // end() is one position past the last element, which is represented by nullptr
-        return iterator(nullptr);
+    /**
+     * @brief Get an iterator to the position after the last element
+     * @return Iterator pointing to the end
+     */
+    Iterator end() {
+        return Iterator(nullptr, this);
     }
 
+    /**
+     * @brief Access element at specified index
+     * @param index The index of the element to access
+     * @return Reference to the element at the specified index
+     */
+    T& operator[](const long long index) {
+        if (index == 0) return this->front->item;
+
+        if (index == (this->length - 1)) return this->back->item;
+
+        if (index <= (this->length / 2)) {
+            Iterator temp(this->front);
+            for (unsigned long long i = 0; i < index; ++i) {
+                ++temp;
+            }
+            return *temp;
+        }
+
+        Iterator temp(this->back);
+        for (unsigned long long int i = (this->length - 1); i > index; --i) {
+            --temp;
+        }
+        return *temp;
+    }
+
+    /**
+     * @brief Access element at specified index with bounds checking
+     * @param index The index of the element to access
+     * @return Reference to the element at the specified index
+     * @throw std::out_of_range if index is out of range
+     */
+    T& at(const long long index) {
+        if (index < length) return this->operator[](index);
+        throw std::out_of_range("Index out of range");
+    }
 };
-
-
 
 #endif //DOUBLY_LINKED_LIST_H

@@ -6,13 +6,76 @@ This repository contains my personal implementations of various data structures 
 
 ### 1. Doubly Linked List (`Doubly_Linked_List.h`)
 A template-based implementation of a doubly linked list with bidirectional traversal capabilities:
-- Dynamic memory management with proper destructors
-- Template-based implementation for type flexibility
-- Key operations:
+- Modern C++ implementation with template support
+- Robust memory management with RAII principles
+- Comprehensive iterator implementation with bidirectional traversal
+- Exception-safe operations with proper error handling
+
+#### Core Features
+- **Memory Management**
+  - Automatic memory cleanup through destructors
+  - No memory leaks through proper resource management
+  - Smart pointer usage for node management
+
+- **Element Access**
+  - Random access through operator[] with O(n) complexity
+  - Bounds-checked access through at() method
+  - Front and back element access
+  - Iterator-based access for efficient traversal
+
+- **Modification Operations**
   - Insertion: push_front, push_back, insert at index
   - Deletion: pop_front, pop_back, erase at index
   - List manipulation: reverse, clear
   - Smart traversal optimization (chooses shortest path to target node)
+
+- **Iterator Support**
+  - Bidirectional iterators
+  - Proper end() handling with decrement support
+  - Const-correct implementation
+  - Safe iterator operations with error checking
+
+- **Initialization and Assignment**
+  - Default constructor
+  - Initializer list constructor
+  - Copy constructor and assignment operator
+  - Move semantics support
+
+#### Usage Example
+```cpp
+// Create and initialize a list
+Doubly_Linked_List<int> list{1, 2, 3, 4, 5};
+
+// Add elements
+list.push_back(6);
+list.push_front(0);
+list.insert(3, 10);
+
+// Access elements
+int first = list[0];
+int last = list.at(list.get_length() - 1);
+
+// Iterate through the list
+for (auto it = list.begin(); it != list.end(); ++it) {
+    std::cout << *it << " ";
+}
+
+// Reverse iteration
+for (auto it = list.end(); it != list.begin(); --it) {
+    std::cout << *it << " ";
+}
+
+// List manipulation
+list.reverse();
+list.clear();
+```
+
+#### Performance Characteristics
+- Insertion/Deletion at ends: O(1)
+- Insertion/Deletion at arbitrary position: O(n)
+- Random access: O(n)
+- Space complexity: O(n)
+- Iterator operations: O(1)
 
 ### 2. Single Linked List (`Linked_List.h`)
 A template-based implementation of a singly linked list:

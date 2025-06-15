@@ -18,7 +18,7 @@ A template-based implementation of a doubly linked list with bidirectional trave
   - Smart pointer usage for node management
 
 - **Element Access**
-  - Random access through operator[] with O(n) complexity
+  - Random access through operator[] with O(n/2) average case, O(1) for first/last element
   - Bounds-checked access through at() method
   - Front and back element access
   - Iterator-based access for efficient traversal

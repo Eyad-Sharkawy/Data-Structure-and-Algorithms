@@ -1,120 +1,207 @@
-//
-// Created by eyadd on 2025-04-21.
-//
+/**
+ * @file Linked_List_Array.h
+ * @brief Declaration of a generic linked list array data structure with iterator support.
+ */
 
 #ifndef LINKED_LIST_ARRAY_H
 #define LINKED_LIST_ARRAY_H
+
 #include <iostream>
-using namespace std;
+#include <initializer_list>
+#include <stdexcept>
 
+/**
+ * @class Linked_List_Array
+ * @brief A generic linked list array implementation supporting forward iteration.
+ * @tparam T The type of elements stored in the list.
+ */
+template <class T>
+class Linked_List_Array {
+private:
+    /**
+     * @struct node
+     * @brief Internal node structure for the linked list array.
+     */
+    struct node {
+        node* next; ///< Pointer to the next node.
+        T item;     ///< The data stored in the node.
+    };
+    node* front; ///< Pointer to the first node in the list.
+    unsigned long long length; ///< Number of elements in the list.
 
-template <class t>
-class Array {
-    int max_size;
-    int* arr;
-    int length;
 public:
-    Array(size_t size):max_size(size), arr(new t), length(0) {}
+    /**
+     * @brief Default constructor. Initializes an empty list.
+     */
+    Linked_List_Array();
+    /**
+     * @brief Destructor. Clears the list and frees memory.
+     */
+    ~Linked_List_Array();
+    /**
+     * @brief Constructs a list from an initializer list.
+     * @param array The initializer list of elements.
+     */
+    Linked_List_Array(std::initializer_list<T> array);
+    /**
+     * @brief Assigns an initializer list to the list.
+     * @param array The initializer list of elements.
+     * @return Reference to this list.
+     */
+    Linked_List_Array& operator=(std::initializer_list<T> array);
+    /**
+     * @brief Copy constructor.
+     * @param other The list to copy from.
+     */
+    Linked_List_Array(const Linked_List_Array& other);
+    /**
+     * @brief Copy assignment operator.
+     * @param other The list to copy from.
+     * @return Reference to this list.
+     */
+    Linked_List_Array& operator=(const Linked_List_Array& other);
+    /**
+     * @brief Returns the number of elements in the list.
+     * @return The length of the list.
+     */
+    [[nodiscard]] unsigned long long get_length() const;
+    /**
+     * @brief Checks if the list is empty.
+     * @return True if the list is empty, false otherwise.
+     */
+    [[nodiscard]] bool empty() const;
+    /**
+     * @brief Adds an element to the end of the list.
+     * @param new_item The element to add.
+     */
+    void push_back(T new_item);
+    /**
+     * @brief Adds an element to the front of the list.
+     * @param new_item The element to add.
+     */
+    void push_front(T new_item);
+    /**
+     * @brief Inserts an element at a specific index.
+     * @param index The position to insert at.
+     * @param new_item The element to insert.
+     */
+    void insert(const unsigned long long index, T new_item);
+    /**
+     * @brief Removes the last element from the list.
+     */
+    void pop_back();
+    /**
+     * @brief Removes the first element from the list.
+     */
+    void pop_front();
+    /**
+     * @brief Removes the element at a specific index.
+     * @param index The position of the element to remove.
+     */
+    void erase(unsigned long long index);
+    /**
+     * @brief Removes all elements from the list.
+     */
+    void clear();
+    /**
+     * @brief Reverses the order of the elements in the list.
+     */
+    void reverse();
+    /**
+     * @brief Prints the contents of the list to standard output.
+     */
+    void print() const;
+    /**
+     * @brief Provides random access to elements by index.
+     * @param index The index of the element.
+     * @return Reference to the element at the given index.
+     * @throws std::out_of_range if the index is invalid.
+     */
+    T& operator[](const long long index);
+    /**
+     * @brief Provides checked access to elements by index.
+     * @param index The index of the element.
+     * @return Reference to the element at the given index.
+     * @throws std::out_of_range if the index is invalid.
+     */
+    T& at(const long long index);
 
-    bool empty() {
-        return length ==0;
-    }
+    /**
+     * @class Iterator
+     * @brief Forward iterator for the linked list array.
+     */
+    class Iterator {
+    private:
+        node* curr; ///< Pointer to the current node.
+        Linked_List_Array<T>* list; ///< Pointer to the parent list.
+    public:
+        /**
+         * @brief Constructs an iterator for a given node and list.
+         * @param p Pointer to the node.
+         * @param l Pointer to the parent list.
+         */
+        Iterator(node* p, Linked_List_Array<T>* l);
+        /**
+         * @brief Default constructor. Creates an end iterator.
+         */
+        Iterator();
+        /**
+         * @brief Copy constructor.
+         * @param other The iterator to copy from.
+         */
+        Iterator(const Iterator& other);
+        /**
+         * @brief Assignment operator.
+         * @param other The iterator to assign from.
+         * @return Reference to this iterator.
+         */
+        Iterator& operator=(const Iterator& other);
+        /**
+         * @brief Checks if two iterators are equal.
+         * @param other The iterator to compare with.
+         * @return True if equal, false otherwise.
+         */
+        bool operator==(const Iterator& other) const;
+        /**
+         * @brief Checks if two iterators are not equal.
+         * @param other The iterator to compare with.
+         * @return True if not equal, false otherwise.
+         */
+        bool operator!=(const Iterator& other) const;
+        /**
+         * @brief Dereferences the iterator to access the element.
+         * @return Reference to the element.
+         */
+        T& operator*();
+        /**
+         * @brief Advances the iterator to the next element (prefix).
+         * @return Reference to this iterator.
+         */
+        Iterator& operator++();
+        /**
+         * @brief Advances the iterator to the next element (postfix).
+         * @return Iterator before increment.
+         */
+        Iterator operator++(int);
+        /**
+         * @brief Accesses the element pointer.
+         * @return Pointer to the element.
+         */
+        T* operator->();
+    };
 
-    bool full() {
-        return length == max_size;
-    }
-
-    int get_length() {
-        return length;
-    }
-
-    void print() const {
-        cout << "[ ";
-        for (size_t i = 0; i < length; ++i) {
-            cout << arr[i] << " ";
-        }
-        cout << "]" << endl;
-    }
-
-    void push_back (t value) {
-        if (!full()) {
-            arr[length] = value;
-            ++length;
-        }
-        else {
-            cout << "Array is full at Push Back" << endl;
-        }
-    }
-
-    void push_front (t value) {
-        if (!full()) {
-            for (size_t i = length; i > 0; --i) {
-                arr[i] = arr[i - 1];
-            }
-            arr[0] = value;
-            ++length;
-        }
-        else {
-            cout << "Array is full at Push Front" << endl;
-        }
-    }
-
-    void insert (size_t pos, t value) {
-        if (!full() && pos <= length ) {
-            for (size_t i = length; i > pos; --i) {
-                arr[i] = arr[i - 1];
-            }
-            arr[pos] = value;
-            ++length;
-        }
-        else if (pos > length) {
-            cout << "Out of range in Insert" << endl;
-        }
-        else {
-            cout << "Array is full at Insert" << endl;
-        }
-    }
-
-    void erase(size_t pos) {
-        if (!empty() && pos <= length ) {
-            for (size_t i = pos; i < length; ++i) {
-                arr[i] = arr[i + 1];
-            }
-            --length;
-        }
-        else if (pos > length) {
-            cout << "Out of range in Insert At" << endl;
-        }
-        else {
-            cout << "Array is empty at Insert At" << endl;
-        }
-    }
-
-    t at(size_t pos) {
-        if (!empty() && pos < length) {
-            return arr[pos];
-        }
-        cout << "Out of range in Insert At" << endl;
-    }
-
-    void update_at (size_t pos, t val) {
-        if (!full() && pos <= length ) {
-            arr[pos] = val;
-        }
-        else {
-            cout << "Out of range in Insert At" << endl;
-        }
-    }
-
-    void clear() {
-        length = 0;
-    }
-
-    ~Array() {
-        delete[] arr;
-    }
+    /**
+     * @brief Returns an iterator to the beginning of the list.
+     * @return Iterator to the first element.
+     */
+    Iterator begin();
+    /**
+     * @brief Returns an iterator to the end of the list.
+     * @return Iterator to one past the last element.
+     */
+    Iterator end();
 };
 
+#include "Linked_List_Array.tpp"
 
-
-#endif //LINKED_LIST_ARRAY_H
+#endif // LINKED_LIST_ARRAY_H

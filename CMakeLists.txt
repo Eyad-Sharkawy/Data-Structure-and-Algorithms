@@ -1,13 +1,21 @@
-cmake_minimum_required(VERSION 3.30)
+#
+# @file CMakeLists.txt
+# @brief CMake build configuration for the Data_Structure project.
+#
+# This file configures the build system to compile all source files except test.cpp,
+# sets the C++ standard, and creates the main executable.
+#
+
+cmake_minimum_required(VERSION 3.10)
 project(Data_Structure)
 
-set(CMAKE_CXX_STANDARD 20)
+# Set C++ standard
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_executable(Data_Structure main.cpp
-        Array_Stack.h
-        Array_Queue.h
-        Linked_Stack.h
-        Linked_Queue.h
-        Linked_List_Array.h
-        Linked_Queue.h
-        Doubly_Linked_List.h)
+# Only include main.cpp and all .cpp files except test.cpp
+file(GLOB SOURCES "*.cpp")
+list(REMOVE_ITEM SOURCES "${CMAKE_SOURCE_DIR}/test.cpp")
+
+# Create executable
+add_executable(${PROJECT_NAME} ${SOURCES})

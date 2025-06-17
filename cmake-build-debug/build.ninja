@@ -51,7 +51,7 @@ build cmake_object_order_depends_target_Data_Structure: phony || .
 
 build CMakeFiles/Data_Structure.dir/main.cpp.obj: CXX_COMPILER__Data_Structure_unscanned_Debug C$:/Users/eyadd/Documents/CPP/Data$ Structure/main.cpp || cmake_object_order_depends_target_Data_Structure
   DEP_FILE = CMakeFiles\Data_Structure.dir\main.cpp.obj.d
-  FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
+  FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\Data_Structure.dir
   OBJECT_FILE_DIR = CMakeFiles\Data_Structure.dir
 

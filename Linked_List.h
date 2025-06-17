@@ -1,182 +1,207 @@
-//
-// Created by eyadd on 2025-04-21.
-//
+/**
+ * @file Linked_List.h
+ * @brief Declaration of a generic singly linked list data structure with iterator support.
+ */
 
-#ifndef SINGLE_LINKED_LIST_H
-#define SINGLE_LINKED_LIST_H
+#ifndef LINKED_LIST_H
+#define LINKED_LIST_H
+
 #include <iostream>
+#include <initializer_list>
+#include <stdexcept>
 
-
-template <class t>
-class Single_Linked_List {
+/**
+ * @class Linked_List
+ * @brief A generic singly linked list implementation supporting forward iteration.
+ * @tparam T The type of elements stored in the list.
+ */
+template <class T>
+class Linked_List {
 private:
+    /**
+     * @struct node
+     * @brief Internal node structure for the singly linked list.
+     */
     struct node {
-        t item;
-        node* next;
+        node* next; ///< Pointer to the next node.
+        T item;     ///< The data stored in the node.
     };
-    node* head;
-    node* tail;
-    unsigned long long length;
+    node* front; ///< Pointer to the first node in the list.
+    unsigned long long length; ///< Number of elements in the list.
+
 public:
-    Single_Linked_List(): head(nullptr), tail(nullptr), length(0){}
+    /**
+     * @brief Default constructor. Initializes an empty list.
+     */
+    Linked_List();
+    /**
+     * @brief Destructor. Clears the list and frees memory.
+     */
+    ~Linked_List();
+    /**
+     * @brief Constructs a list from an initializer list.
+     * @param array The initializer list of elements.
+     */
+    Linked_List(std::initializer_list<T> array);
+    /**
+     * @brief Assigns an initializer list to the list.
+     * @param array The initializer list of elements.
+     * @return Reference to this list.
+     */
+    Linked_List& operator=(std::initializer_list<T> array);
+    /**
+     * @brief Copy constructor.
+     * @param other The list to copy from.
+     */
+    Linked_List(const Linked_List& other);
+    /**
+     * @brief Copy assignment operator.
+     * @param other The list to copy from.
+     * @return Reference to this list.
+     */
+    Linked_List& operator=(const Linked_List& other);
+    /**
+     * @brief Returns the number of elements in the list.
+     * @return The length of the list.
+     */
+    [[nodiscard]] unsigned long long get_length() const;
+    /**
+     * @brief Checks if the list is empty.
+     * @return True if the list is empty, false otherwise.
+     */
+    [[nodiscard]] bool empty() const;
+    /**
+     * @brief Adds an element to the end of the list.
+     * @param new_item The element to add.
+     */
+    void push_back(T new_item);
+    /**
+     * @brief Adds an element to the front of the list.
+     * @param new_item The element to add.
+     */
+    void push_front(T new_item);
+    /**
+     * @brief Inserts an element at a specific index.
+     * @param index The position to insert at.
+     * @param new_item The element to insert.
+     */
+    void insert(const unsigned long long index, T new_item);
+    /**
+     * @brief Removes the last element from the list.
+     */
+    void pop_back();
+    /**
+     * @brief Removes the first element from the list.
+     */
+    void pop_front();
+    /**
+     * @brief Removes the element at a specific index.
+     * @param index The position of the element to remove.
+     */
+    void erase(unsigned long long index);
+    /**
+     * @brief Removes all elements from the list.
+     */
+    void clear();
+    /**
+     * @brief Reverses the order of the elements in the list.
+     */
+    void reverse();
+    /**
+     * @brief Prints the contents of the list to standard output.
+     */
+    void print() const;
+    /**
+     * @brief Provides random access to elements by index.
+     * @param index The index of the element.
+     * @return Reference to the element at the given index.
+     * @throws std::out_of_range if the index is invalid.
+     */
+    T& operator[](const long long index);
+    /**
+     * @brief Provides checked access to elements by index.
+     * @param index The index of the element.
+     * @return Reference to the element at the given index.
+     * @throws std::out_of_range if the index is invalid.
+     */
+    T& at(const long long index);
 
-    [[nodiscard]] bool empty() const {
-        return length == 0;
-    }
+    /**
+     * @class Iterator
+     * @brief Forward iterator for the singly linked list.
+     */
+    class Iterator {
+    private:
+        node* curr; ///< Pointer to the current node.
+        Linked_List<T>* list; ///< Pointer to the parent list.
+    public:
+        /**
+         * @brief Constructs an iterator for a given node and list.
+         * @param p Pointer to the node.
+         * @param l Pointer to the parent list.
+         */
+        Iterator(node* p, Linked_List<T>* l);
+        /**
+         * @brief Default constructor. Creates an end iterator.
+         */
+        Iterator();
+        /**
+         * @brief Copy constructor.
+         * @param other The iterator to copy from.
+         */
+        Iterator(const Iterator& other);
+        /**
+         * @brief Assignment operator.
+         * @param other The iterator to assign from.
+         * @return Reference to this iterator.
+         */
+        Iterator& operator=(const Iterator& other);
+        /**
+         * @brief Checks if two iterators are equal.
+         * @param other The iterator to compare with.
+         * @return True if equal, false otherwise.
+         */
+        bool operator==(const Iterator& other) const;
+        /**
+         * @brief Checks if two iterators are not equal.
+         * @param other The iterator to compare with.
+         * @return True if not equal, false otherwise.
+         */
+        bool operator!=(const Iterator& other) const;
+        /**
+         * @brief Dereferences the iterator to access the element.
+         * @return Reference to the element.
+         */
+        T& operator*();
+        /**
+         * @brief Advances the iterator to the next element (prefix).
+         * @return Reference to this iterator.
+         */
+        Iterator& operator++();
+        /**
+         * @brief Advances the iterator to the next element (postfix).
+         * @return Iterator before increment.
+         */
+        Iterator operator++(int);
+        /**
+         * @brief Accesses the element pointer.
+         * @return Pointer to the element.
+         */
+        T* operator->();
+    };
 
-    [[nodiscard]] unsigned long long get_length() const {
-        return length;
-    }
-
-    void push_back(t new_item) {
-        if (empty()) {
-            tail = new node;
-            tail -> item = new_item;
-            tail -> next = nullptr;
-            head = tail;
-            ++length;
-        }
-        else {
-            node* temp = new node;
-            temp -> item = new_item;
-            temp -> next = nullptr;
-            tail -> next = temp;
-            tail = temp;
-            ++length;
-        }
-    }
-
-    void push_front(t new_item) {
-        if (empty()) {
-            head = new node;
-            head -> item = new_item;
-            head -> next = nullptr;
-            tail = head;
-            ++length;
-        }
-        else {
-            node* temp = new node;
-            temp -> item = new_item;
-            temp -> next = head;
-            head = temp;
-            ++length;
-        }
-    }
-
-    void insert(unsigned long long index, t new_item) {
-        if (index <= length) {
-            if (index == 0) {
-                push_front(new_item);
-            }
-            else if (index == length) {
-                push_back(new_item);
-            }
-            else {
-                node* new_node = new node;
-                node* temp = head;
-                new_node -> item = new_item;
-
-                while (--(index)) {
-                    temp = temp -> next;
-                }
-                new_node -> next = temp -> next;
-                temp -> next = new_node;
-                ++length;
-            }
-        }
-        else {
-            std::cout << "Linked List Index is out of Range at Insert" << std::endl;
-        }
-    }
-
-    void print() {
-        node* temp = head;
-        std::cout << "[ ";
-        while (temp != nullptr) {
-            std::cout << temp -> item << ' ';
-            temp = temp -> next;
-        }
-        std::cout << ']' << std::endl;
-        delete temp;
-    }
-
-    void pop_front() {
-        if (!empty()) {
-            const node* temp = head;
-            head = head -> next;
-            delete temp;
-            --length;
-        }
-        else {
-            std::cout << "Linked List is empty at Pop Front" << std::endl;
-        }
-    }
-
-    void pop_back() {
-        if (!empty()) {
-            node* temp = head;
-            while (temp -> next -> next != nullptr) {
-                temp = temp -> next;
-            }
-            tail = temp;
-            temp = temp -> next;
-            tail -> next = nullptr;
-            delete temp;
-            --length;
-        }
-        else {
-            std::cout << "Linked List is empty at Pop Back" << std::endl;
-        }
-    }
-
-    void erase(long long index) {
-        if (index >= 0 && index < length) {
-            if (index == 0) {
-                pop_front();
-            }
-            else if (index == (length - 1)) {
-                pop_back();
-            }
-            else {
-                node* temp = head;
-                while (--index) {
-                    temp = temp -> next;
-                }
-                node* del = temp -> next;
-                temp -> next = del -> next;
-                delete del;
-                --length;
-            }
-        }
-        else {
-            std::cout << "Linked List Index is out of Range in erase" << std::endl;
-        }
-    }
-
-    void reverse() {
-        node *prevptr = nullptr;
-        node *currptr = head;
-
-        while (currptr != nullptr) {
-            node *nextptr = currptr->next;
-            currptr -> next = prevptr;
-            prevptr = currptr;
-            currptr = nextptr;
-        }
-        head = prevptr;
-    }
-
-    unsigned long long find (t item) {
-        node* temp = head;
-        unsigned long long index = 0;
-        while (temp != nullptr) {
-            if (temp -> item == item) return index;
-            temp = temp -> next;
-            ++index;
-        }
-    }
+    /**
+     * @brief Returns an iterator to the beginning of the list.
+     * @return Iterator to the first element.
+     */
+    Iterator begin();
+    /**
+     * @brief Returns an iterator to the end of the list.
+     * @return Iterator to one past the last element.
+     */
+    Iterator end();
 };
 
+#include "Linked_List.tpp"
 
-
-#endif //SINGLE_LINKED_LIST_H
+#endif // LINKED_LIST_H

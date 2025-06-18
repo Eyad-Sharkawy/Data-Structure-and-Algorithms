@@ -4,7 +4,7 @@
  * @see Linked_List_Array.h for class documentation.
  */
 
-#include "Linked_List_Array.h"
+#include "Linked_List_Array.hpp"
 
 template <class T>
 Linked_List_Array<T>::Linked_List_Array() : front(nullptr), length(0) {}

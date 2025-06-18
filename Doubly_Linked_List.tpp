@@ -2,7 +2,7 @@
 // See Doubly_Linked_List.h for class documentation
 
 #pragma once
-#include "Doubly_Linked_List.h"
+#include "Doubly_Linked_List.hpp"
 
 template<class T>
 Doubly_Linked_List<T>::Doubly_Linked_List() : front(nullptr), back(nullptr), length(0) {}

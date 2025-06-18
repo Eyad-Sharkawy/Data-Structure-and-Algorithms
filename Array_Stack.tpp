@@ -4,7 +4,7 @@
  * @see Array_Stack.h for class documentation.
  */
 
-#include "Array_Stack.h"
+#include "Array_Stack.hpp"
 
 template <class T>
 Array_Stack<T>::Array_Stack() : top(-1), capacity(10) {

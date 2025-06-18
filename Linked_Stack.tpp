@@ -4,7 +4,7 @@
  * @see Linked_Stack.h for class documentation.
  */
 
-#include "Linked_Stack.h"
+#include "Linked_Stack.hpp"
 
 template <class T>
 Linked_Stack<T>::Linked_Stack() : top(nullptr), length(0) {}

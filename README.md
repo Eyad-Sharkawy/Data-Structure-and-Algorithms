@@ -4,7 +4,7 @@ This repository contains my personal implementations of various data structures 
 
 ## Implemented Data Structures
 
-### 1. Doubly Linked List (`Doubly_Linked_List.h`, `Doubly_Linked_List.tpp`)
+### 1. Doubly Linked List (`Doubly_Linked_List.hpp`, `Doubly_Linked_List.tpp`)
 A template-based implementation of a doubly linked list with bidirectional traversal capabilities:
 - Modern C++ implementation with template support
 - Robust memory management with RAII principles
@@ -35,7 +35,7 @@ A template-based implementation of a doubly linked list with bidirectional trave
   - Const-correct implementation
   - Safe iterator operations with error checking
 
-### 2. Single Linked List (`Linked_List.h`, `Linked_List.tpp`)
+### 2. Single Linked List (`Linked_List.hpp`, `Linked_List.tpp`)
 A template-based implementation of a singly linked list:
 - Dynamic memory management
 - Key operations:
@@ -45,7 +45,7 @@ A template-based implementation of a singly linked list:
   - Search functionality with find() method
   - Maintains both head and tail pointers
 
-### 3. Array-based Queue (`Array_Queue.h`, `Array_Queue.tpp`)
+### 3. Array-based Queue (`Array_Queue.hpp`, `Array_Queue.tpp`)
 A circular queue implementation using arrays:
 - Fixed-size implementation with circular buffer
 - Default size of 100 elements, customizable
@@ -55,7 +55,7 @@ A circular queue implementation using arrays:
   - Full and empty state checking
   - Circular buffer implementation for efficient space usage
 
-### 4. Linked List-based Queue (`Linked_Queue.h`, `Linked_Queue.tpp`)
+### 4. Linked List-based Queue (`Linked_Queue.hpp`, `Linked_Queue.tpp`)
 A dynamic queue implementation using linked lists:
 - Unlimited size (limited only by available memory)
 - Key operations:
@@ -64,7 +64,7 @@ A dynamic queue implementation using linked lists:
   - Queue clearing functionality
   - Dynamic memory management
 
-### 5. Dynamic Array (`Linked_List_Array.h`, `Linked_List_Array.tpp`)
+### 5. Dynamic Array (`Linked_List_Array.hpp`, `Linked_List_Array.tpp`)
 A template-based dynamic array implementation:
 - Fixed maximum size with dynamic content
 - Key operations:
@@ -73,7 +73,7 @@ A template-based dynamic array implementation:
   - Element access and update
   - Array state management (empty, full)
 
-### 6. Array-based Stack (`Array_Stack.h`, `Array_Stack.tpp`)
+### 6. Array-based Stack (`Array_Stack.hpp`, `Array_Stack.tpp`)
 A template-based stack implementation using arrays:
 - Dynamic resizing when full
 - Key operations:
@@ -82,7 +82,7 @@ A template-based stack implementation using arrays:
   - Full and empty state checking
   - Automatic capacity management
 
-### 7. Linked List-based Stack (`Linked_Stack.h`, `Linked_Stack.tpp`)
+### 7. Linked List-based Stack (`Linked_Stack.hpp`, `Linked_Stack.tpp`)
 A dynamic stack implementation using linked lists:
 - Unlimited size (limited only by available memory)
 - Key operations:
@@ -94,7 +94,7 @@ A dynamic stack implementation using linked lists:
 ## Features Common Across Implementations
 
 - Modern C++ implementation with template support
-- Separation of interface (.h) and implementation (.tpp) files
+- Separation of interface (.hpp) and implementation (.tpp) files
 - Exception handling and bounds checking
 - Memory leak prevention through proper destructors
 - Comprehensive error handling
@@ -157,23 +157,23 @@ stack.print();  // Output: [ 1 2 3 ]
 ## Project Structure
 ```
 Data Structure/
-├── Array_Queue.h          # Array-based queue interface
-├── Array_Queue.tpp        # Array-based queue implementation
-├── Array_Stack.h          # Array-based stack interface
-├── Array_Stack.tpp        # Array-based stack implementation
-├── Doubly_Linked_List.h   # Doubly linked list interface
-├── Doubly_Linked_List.tpp # Doubly linked list implementation
-├── Linked_List.h          # Single linked list interface
-├── Linked_List.tpp        # Single linked list implementation
-├── Linked_List_Array.h    # Dynamic array interface
-├── Linked_List_Array.tpp  # Dynamic array implementation
-├── Linked_Queue.h         # Linked list-based queue interface
-├── Linked_Queue.tpp       # Linked list-based queue implementation
-├── Linked_Stack.h         # Linked list-based stack interface
-├── Linked_Stack.tpp       # Linked list-based stack implementation
-├── main.cpp              # Main program with test cases
-├── CMakeLists.txt        # CMake build configuration
-└── README.md             # Project documentation
+├── Array_Queue.hpp          # Array-based queue interface
+├── Array_Queue.tpp          # Array-based queue implementation
+├── Array_Stack.hpp          # Array-based stack interface
+├── Array_Stack.tpp          # Array-based stack implementation
+├── Doubly_Linked_List.hpp   # Doubly linked list interface
+├── Doubly_Linked_List.tpp   # Doubly linked list implementation
+├── Linked_List.hpp          # Single linked list interface
+├── Linked_List.tpp          # Single linked list implementation
+├── Linked_List_Array.hpp    # Dynamic array interface
+├── Linked_List_Array.tpp    # Dynamic array implementation
+├── Linked_Queue.hpp         # Linked list-based queue interface
+├── Linked_Queue.tpp         # Linked list-based queue implementation
+├── Linked_Stack.hpp         # Linked list-based stack interface
+├── Linked_Stack.tpp         # Linked list-based stack implementation
+├── main.cpp                 # Main program with test cases
+├── CMakeLists.txt          # CMake build configuration
+└── README.md               # Project documentation
 ```
 
 ## Building the Project

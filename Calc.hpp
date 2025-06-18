@@ -4,7 +4,7 @@
 
 #ifndef CALC_H
 #define CALC_H
-#include "Linked_Stack.h"
+#include "Linked_Stack.hpp"
 
 using namespace std;
 

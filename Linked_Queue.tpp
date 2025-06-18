@@ -4,7 +4,7 @@
  * @see Linked_Queue.h for class documentation.
  */
 
-#include "Linked_Queue.h"
+#include "Linked_Queue.hpp"
 
 template <class T>
 Linked_Queue<T>::Linked_Queue() : front(nullptr), back(nullptr), length(0) {}

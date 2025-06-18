@@ -8,13 +8,13 @@
 
 #include <iostream>
 #include <cassert>
-#include "Doubly_Linked_List.h"
-#include "Linked_List.h"
-#include "Linked_List_Array.h"
-#include "Array_Stack.h"
-#include "Linked_Stack.h"
-#include "Array_Queue.h"
-#include "Linked_Queue.h"
+#include "Doubly_Linked_List.hpp"
+#include "Linked_List.hpp"
+#include "Linked_List_Array.hpp"
+#include "Array_Stack.hpp"
+#include "Linked_Stack.hpp"
+#include "Array_Queue.hpp"
+#include "Linked_Queue.hpp"
 
 // Helper function to print test results
 void print_test_result(const char* test_name, bool passed) {

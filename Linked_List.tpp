@@ -4,7 +4,7 @@
  * @see Linked_List.h for class documentation.
  */
 
-#include "Linked_List.h"
+#include "Linked_List.hpp"
 
 template <class T>
 Linked_List<T>::Linked_List() : front(nullptr), length(0) {}

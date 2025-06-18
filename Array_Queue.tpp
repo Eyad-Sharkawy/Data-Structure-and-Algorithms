@@ -7,7 +7,7 @@
 #include "Array_Queue.hpp"
 
 template <class T>
-Array_Queue<T>::Array_Queue() : front(0), back(-1), length(0), capacity(10) {
+Array_Queue<T>::Array_Queue() : front(0), back(-1), capacity(10), length(0) {
     arr = new T[capacity];
 }
 

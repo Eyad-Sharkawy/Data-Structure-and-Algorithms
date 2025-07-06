@@ -1,8 +1,17 @@
 # Data Structures Implementation
 
-This repository contains my personal implementations of various data structures in C++. These implementations were created as part of my learning journey to understand fundamental data structures and their operations.
+This repository contains comprehensive implementations of various data structures in C++. These implementations were created as part of my learning journey to understand fundamental data structures and their operations.
 
-## Implemented Data Structures
+## 🚀 Features
+
+- **Modern C++ Implementation**: Uses C++11+ features with templates and RAII principles
+- **Comprehensive Testing**: Automated test suite with visual feedback
+- **Multiple Implementations**: Both array-based and linked list-based versions where applicable
+- **Self-Balancing Trees**: AVL tree implementation with automatic balancing
+- **Interactive Testing**: Menu-driven interface for testing individual or all data structures
+- **Memory Safe**: Proper memory management with destructors and exception handling
+
+## 📋 Implemented Data Structures
 
 ### 1. Doubly Linked List (`Doubly_Linked_List.hpp`, `Doubly_Linked_List.tpp`)
 A template-based implementation of a doubly linked list with bidirectional traversal capabilities:
@@ -91,16 +100,40 @@ A dynamic stack implementation using linked lists:
   - Stack clearing functionality
   - Dynamic memory management
 
+### 8. Binary Tree (AVL) (`Binary_Tree.hpp`, `Binary_Tree.tpp`)
+A self-balancing binary search tree implementation using AVL algorithm:
+- Automatic height balancing after insertions
+- Four types of tree traversals (pre-order, in-order, post-order, level-order)
+- Key operations:
+  - Element insertion with automatic balancing
+  - Tree traversal methods
+  - Successor finding functionality
+  - Height and balance factor calculations
+  - Left and right rotations for balancing
+- AVL balancing ensures O(log n) time complexity for all operations
+
 ## Features Common Across Implementations
 
-- Modern C++ implementation with template support
-- Separation of interface (.hpp) and implementation (.tpp) files
-- Exception handling and bounds checking
-- Memory leak prevention through proper destructors
-- Comprehensive error handling
-- Print functionality for debugging and visualization
-- Initializer list support for easy initialization
-- Copy and move semantics support
+- **Modern C++ Implementation**: Uses C++11+ features with templates and RAII principles
+- **Separation of Concerns**: Interface (.hpp) and implementation (.tpp) files
+- **Exception Safety**: Comprehensive exception handling and bounds checking
+- **Memory Safety**: Memory leak prevention through proper destructors
+- **Error Handling**: Robust error handling with meaningful error messages
+- **Debugging Support**: Print functionality for debugging and visualization
+- **Modern C++ Features**: Initializer list support, copy and move semantics
+- **Template Support**: Generic implementations supporting any data type
+
+## 📊 Performance Characteristics
+
+| Data Structure | Access | Search | Insertion | Deletion | Space |
+|---------------|--------|--------|-----------|----------|-------|
+| Doubly Linked List | O(n) | O(n) | O(1) | O(1) | O(n) |
+| Single Linked List | O(n) | O(n) | O(1) | O(1) | O(n) |
+| Array-based Queue | O(1) | O(n) | O(1) | O(1) | O(n) |
+| Linked Queue | O(1) | O(n) | O(1) | O(1) | O(n) |
+| Array-based Stack | O(1) | O(n) | O(1) | O(1) | O(n) |
+| Linked Stack | O(1) | O(n) | O(1) | O(1) | O(n) |
+| Binary Tree (AVL) | O(log n) | O(log n) | O(log n) | O(log n) | O(n) |
 
 ## Usage Examples
 
@@ -154,29 +187,94 @@ stack.pop();
 stack.print();  // Output: [ 1 2 3 ]
 ```
 
+### Binary Tree (AVL)
+```cpp
+Binary_Tree<int> tree;
+tree.insert(50);
+tree.insert(30);
+tree.insert(70);
+tree.insert(20);
+tree.insert(40);
+
+// Traversals
+tree.inOrder();    // Output: 20 30 40 50 70
+tree.preOrder();   // Output: 50 30 20 40 70
+tree.postOrder();  // Output: 20 40 30 70 50
+tree.levelOrder(); // Output: 50 30 70 20 40
+```
+
 ## Project Structure
 ```
 Data Structure/
-├── Array_Queue.hpp          # Array-based queue interface
-├── Array_Queue.tpp          # Array-based queue implementation
-├── Array_Stack.hpp          # Array-based stack interface
-├── Array_Stack.tpp          # Array-based stack implementation
-├── Doubly_Linked_List.hpp   # Doubly linked list interface
-├── Doubly_Linked_List.tpp   # Doubly linked list implementation
-├── Linked_List.hpp          # Single linked list interface
-├── Linked_List.tpp          # Single linked list implementation
-├── Linked_List_Array.hpp    # Dynamic array interface
-├── Linked_List_Array.tpp    # Dynamic array implementation
-├── Linked_Queue.hpp         # Linked list-based queue interface
-├── Linked_Queue.tpp         # Linked list-based queue implementation
-├── Linked_Stack.hpp         # Linked list-based stack interface
-├── Linked_Stack.tpp         # Linked list-based stack implementation
-├── main.cpp                 # Main program with test cases
-├── CMakeLists.txt          # CMake build configuration
-└── README.md               # Project documentation
+├── Binary-Tree/
+│   ├── Binary_Tree.hpp     # Binary tree (AVL) interface
+│   └── Binary_Tree.tpp     # Binary tree (AVL) implementation
+├── Linked-List/
+│   ├── Doubly_Linked_List.hpp   # Doubly linked list interface
+│   ├── Doubly_Linked_List.tpp   # Doubly linked list implementation
+│   ├── Linked_List.hpp          # Single linked list interface
+│   ├── Linked_List.tpp          # Single linked list implementation
+│   ├── Linked_List_Array.hpp    # Dynamic array interface
+│   └── Linked_List_Array.tpp    # Dynamic array implementation
+├── Stack/
+│   ├── Array_Stack.hpp          # Array-based stack interface
+│   ├── Array_Stack.tpp          # Array-based stack implementation
+│   ├── Linked_Stack.hpp         # Linked list-based stack interface
+│   └── Linked_Stack.tpp         # Linked list-based stack implementation
+├── Queue/
+│   ├── Array_Queue.hpp          # Array-based queue interface
+│   ├── Array_Queue.tpp          # Array-based queue implementation
+│   ├── Linked_Queue.hpp         # Linked list-based queue interface
+│   └── Linked_Queue.tpp         # Linked list-based queue implementation
+├── main.cpp                     # Main program with comprehensive test suite
+├── CMakeLists.txt              # CMake build configuration
+├── build.bat                   # Windows build script
+└── README.md                   # Project documentation
 ```
 
-## Building the Project
+## 🧪 Testing
+
+The project includes a comprehensive test suite accessible through an interactive menu system. The test suite covers:
+
+### Test Coverage
+- **Constructor and Initialization**: Tests proper object creation
+- **Core Operations**: Tests all primary data structure operations
+- **Edge Cases**: Tests boundary conditions and error scenarios
+- **Copy Semantics**: Tests copy constructors and assignment operators
+- **Memory Management**: Ensures proper cleanup and no memory leaks
+
+### Running Tests
+```bash
+# Build the project
+mkdir build
+cd build
+cmake ..
+cmake --build .
+
+# Run the test suite
+./Data_Structure.exe
+```
+
+### Test Menu Options
+1. **Test Doubly Linked List** - Comprehensive doubly linked list testing
+2. **Test Linked List** - Single linked list functionality testing
+3. **Test Linked List Array** - Array-based linked list testing
+4. **Test Array Stack** - Array-based stack operations
+5. **Test Linked Stack** - Linked list-based stack operations
+6. **Test Array Queue** - Array-based queue operations
+7. **Test Linked Queue** - Linked list-based queue operations
+8. **Test Binary Tree** - AVL tree operations and traversals
+9. **Run All Tests** - Execute complete test suite
+0. **Exit** - Close the program
+
+### Test Output
+Tests provide visual feedback with:
+- ✓ for passed tests
+- ✗ for failed tests
+- Detailed console output for tree traversals
+
+## 🏗️ Building the Project
+
 The project uses CMake for building. To build:
 ```bash
 mkdir build
@@ -185,12 +283,21 @@ cmake ..
 cmake --build .
 ```
 
-## Future Additions
-- Binary Search Tree implementation
-- Hash Table implementation
-- Graph data structures
-- Priority Queue
-- More advanced tree structures
+### Windows Build
+For Windows users, you can also use the provided batch file:
+```bash
+build.bat
+```
+
+## 🚧 Future Additions
+- **Hash Table implementation** - For O(1) average case lookups
+- **Graph data structures** - Adjacency list/matrix implementations
+- **Priority Queue** - Heap-based priority queue
+- **Red-Black Tree** - Alternative self-balancing tree
+- **B-Tree/B+ Tree** - For disk-based storage scenarios
+- **Trie** - For string operations and autocomplete
+- **Union-Find** - For graph algorithms and connectivity
+- **Skip List** - Alternative to balanced trees
 
 ## Contributing
 This is a personal learning project, but suggestions and improvements are welcome!
